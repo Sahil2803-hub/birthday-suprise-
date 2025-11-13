@@ -5,14 +5,320 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Birthday Surprise</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Additional styles for the complete page */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .setup-section, .upload-section, .share-section {
+            margin-bottom: 30px;
+        }
+
+        .setup-card, .upload-card, .share-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .setup-card h2, .upload-card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="file"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #06d6a0, #118ab2);
+            color: white;
+            width: 100%;
+            font-size: 1.2em;
+            padding: 20px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .image-preview {
+            margin-top: 15px;
+            display: none;
+            text-align: center;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .added-memories {
+            margin-top: 40px;
+            border-top: 2px solid #eee;
+            padding-top: 30px;
+        }
+
+        .memory-item {
+            margin-bottom: 15px;
+        }
+
+        .memory-preview {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .memory-preview img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+
+        .memory-info {
+            flex: 1;
+        }
+
+        .memory-info p {
+            margin: 0;
+            color: #555;
+        }
+
+        .btn-remove {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .completion-section {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            opacity: 0.8;
+        }
+
+        /* Share section specific styles */
+        .share-link-container {
+            display: flex;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .share-link-container input {
+            flex: 1;
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+        }
+
+        .qr-sharing-section {
+            text-align: center;
+            margin: 30px 0;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+        }
+
+        .qr-code img {
+            border: 2px solid #e1e5e9;
+            padding: 15px;
+            background: white;
+            border-radius: 15px;
+            max-width: 200px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .preview-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .preview-link a {
+            display: inline-block;
+            margin: 5px;
+            padding: 12px 25px;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .setup-card, .upload-card, .share-card {
+                padding: 25px;
+            }
+            
+            .share-link-container {
+                flex-direction: column;
+            }
+            
+            .memory-preview {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .memory-preview img {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Animation for messages */
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes slideOutRight {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <header class="header">
             <h1>🎂 Create Birthday Surprise 🎂</h1>
             <p class="subtitle">Upload photos and write messages for the birthday person!</p>
         </header>
 
+        <!-- Setup Section -->
         <div class="setup-section">
             <div class="setup-card">
                 <h2>First, Tell Us About the Birthday</h2>
@@ -32,6 +338,7 @@
             </div>
         </div>
 
+        <!-- Upload Section -->
         <div id="uploadSection" class="upload-section" style="display: none;">
             <div class="upload-card">
                 <h2>Add Photos & Memories</h2>
@@ -65,20 +372,61 @@
             </div>
         </div>
 
+        <!-- Share Section -->
         <div id="shareSection" class="share-section" style="display: none;">
             <div class="share-card">
-                <h2>🎉 Your Birthday Surprise is Ready! 🎉</h2>
-                <p>Share this special link with the birthday person:</p>
-                <div class="share-link-container">
-                    <input type="text" id="shareableLink" readonly>
-                    <button id="copyLink" class="btn btn-secondary">Copy Link</button>
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h2 style="color: #667eea; margin-bottom: 10px;">🎉 Your Birthday Surprise is Ready! 🎉</h2>
+                    <p style="color: #666; font-size: 1.1em;">Share this special link with the birthday person</p>
                 </div>
+
+                <!-- Share Link -->
+                <div style="margin-bottom: 30px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #555;">Shareable Link:</label>
+                    <div class="share-link-container">
+                        <input type="text" id="shareableLink" readonly 
+                               style="flex: 1; padding: 12px; border: 2px solid #e1e5e9; border-radius: 10px; font-size: 14px; background: #f8f9fa;">
+                        <button id="copyLink" class="btn btn-primary" style="white-space: nowrap;">Copy Link</button>
+                    </div>
+                </div>
+
+                <!-- QR Code -->
+                <div class="qr-sharing-section">
+                    <h3 style="color: #333; margin-bottom: 20px;">📱 Easy Phone Sharing</h3>
+                    <div id="qrCode" class="qr-code"></div>
+                    <p style="font-size: 14px; margin-top: 15px; color: #666; font-weight: 500;">Scan with phone camera 📱</p>
+                </div>
+
+                <!-- WhatsApp Share -->
+                <div style="text-align: center; margin: 20px 0;">
+                    <button id="whatsappShare" class="btn btn-whatsapp">
+                        📱 Share via WhatsApp
+                    </button>
+                </div>
+
+                <!-- Preview & Create New -->
                 <div class="preview-link">
-                    <a href="#" id="previewLink" class="btn btn-primary" target="_blank">Preview the Surprise</a>
+                    <a href="#" id="previewLink" class="btn btn-secondary" target="_blank">
+                        👀 Preview the Surprise
+                    </a>
+                    <a href="index.html" class="btn btn-primary">
+                        🎂 Create Another
+                    </a>
+                </div>
+
+                <!-- Tips -->
+                <div style="margin-top: 30px; padding: 20px; background: #fff9e6; border-radius: 12px; border-left: 4px solid #FFD700;">
+                    <h4 style="color: #e67e22; margin-bottom: 10px;">💡 Tips for the big reveal:</h4>
+                    <ul style="color: #666; padding-left: 20px;">
+                        <li>Send the link exactly at midnight for maximum surprise!</li>
+                        <li>Add a fun message like "I made something special for you!"</li>
+                        <li>Be ready for their reaction call! 📞</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
+        <!-- Footer -->
         <footer class="footer">
             <p>Made with ❤️ for a special birthday celebration!</p>
         </footer>
