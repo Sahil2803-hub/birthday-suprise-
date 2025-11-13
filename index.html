@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Birthday Surprise</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎂 Create Birthday Surprise 🎂</h1>
+            <p class="subtitle">Upload photos and write messages for the birthday person!</p>
+        </header>
+
+        <div class="setup-section">
+            <div class="setup-card">
+                <h2>First, Tell Us About the Birthday</h2>
+                <div class="form-group">
+                    <label for="birthdayPersonName">Birthday Person's Name:</label>
+                    <input type="text" id="birthdayPersonName" required placeholder="Enter their name">
+                </div>
+                <div class="form-group">
+                    <label for="yourName">Your Name:</label>
+                    <input type="text" id="yourName" required placeholder="Enter your name">
+                </div>
+                <div class="form-group">
+                    <label for="birthdayMessage">Your Birthday Message:</label>
+                    <textarea id="birthdayMessage" required placeholder="Write your main birthday wish here..."></textarea>
+                </div>
+                <button id="startUpload" class="btn btn-primary">Start Adding Photos →</button>
+            </div>
+        </div>
+
+        <div id="uploadSection" class="upload-section" style="display: none;">
+            <div class="upload-card">
+                <h2>Add Photos & Memories</h2>
+                
+                <div class="memory-form">
+                    <div class="form-group">
+                        <label for="memoryImage">Choose a Photo:</label>
+                        <input type="file" id="memoryImage" accept="image/*" required>
+                        <div class="image-preview" id="imagePreview"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="photoDescription">Photo Description:</label>
+                        <textarea id="photoDescription" required 
+                                  placeholder="What's special about this moment?"></textarea>
+                    </div>
+                    
+                    <button id="addPhoto" class="btn btn-primary">➕ Add This Photo</button>
+                </div>
+
+                <div id="addedMemories" class="added-memories">
+                    <h3>Your Added Photos (<span id="photoCount">0</span>)</h3>
+                    <div id="memoryList"></div>
+                </div>
+
+                <div class="completion-section">
+                    <button id="generateLink" class="btn btn-success" disabled>
+                        🎁 Generate Birthday Surprise Link
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="shareSection" class="share-section" style="display: none;">
+            <div class="share-card">
+                <h2>🎉 Your Birthday Surprise is Ready! 🎉</h2>
+                <p>Share this special link with the birthday person:</p>
+                <div class="share-link-container">
+                    <input type="text" id="shareableLink" readonly>
+                    <button id="copyLink" class="btn btn-secondary">Copy Link</button>
+                </div>
+                <div class="preview-link">
+                    <a href="#" id="previewLink" class="btn btn-primary" target="_blank">Preview the Surprise</a>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Made with ❤️ for a special birthday celebration!</p>
+        </footer>
+    </div>
+
+    <script src="creator.js"></script>
+</body>
+</html>
