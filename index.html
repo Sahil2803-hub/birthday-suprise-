@@ -5,61 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Birthday Surprise</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: Arial, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh; 
-            padding: 20px;
-            color: #333;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .container { max-width: 600px; margin: 0 auto; }
-        .header { text-align: center; color: white; margin-bottom: 30px; }
-        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
-        .card { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
             margin-bottom: 20px;
         }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
-        input, textarea, button { 
-            width: 100%; 
-            padding: 12px; 
-            border: 2px solid #ddd; 
-            border-radius: 8px; 
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
             font-size: 16px;
         }
-        button { 
-            background: #667eea; 
-            color: white; 
-            border: none; 
-            cursor: pointer; 
-            font-weight: bold;
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
             margin-top: 10px;
         }
-        button:hover { background: #5a6fd8; }
-        .memory-item { 
-            background: #f8f9fa; 
-            padding: 15px; 
-            margin: 10px 0; 
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
+        button:hover {
+            background: #5a6fd8;
         }
-        .memory-preview { display: flex; align-items: center; gap: 15px; }
-        .memory-preview img { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
-        .qr-code { text-align: center; margin: 20px 0; }
-        .qr-code img { max-width: 200px; border: 1px solid #ddd; padding: 10px; background: white; }
-        .hidden { display: none; }
+        .hidden {
+            display: none;
+        }
+        #shareLink {
+            background: #f8f9fa;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <!-- Setup Section -->
-        <div id="setupSection" class="card">
-            <h2>🎂 Create Birthday Surprise</h2>
+        <div id="setupSection">
+            <h1>🎂 Create Birthday Surprise</h1>
             <div class="form-group">
                 <label>Birthday Person's Name:</label>
                 <input type="text" id="birthdayName" placeholder="Enter their name">
@@ -72,12 +89,12 @@
                 <label>Birthday Message:</label>
                 <textarea id="birthdayMessage" placeholder="Write your birthday wish..."></textarea>
             </div>
-            <button onclick="startUpload()">Start Adding Photos →</button>
+            <button onclick="showUploadSection()">Next → Add Photos</button>
         </div>
 
         <!-- Upload Section -->
-        <div id="uploadSection" class="card hidden">
-            <h2>📸 Add Photos & Memories</h2>
+        <div id="uploadSection" class="hidden">
+            <h1>📸 Add Photos</h1>
             <div class="form-group">
                 <label>Choose Photo:</label>
                 <input type="file" id="photoInput" accept="image/*">
@@ -87,28 +104,17 @@
                 <textarea id="photoDesc" placeholder="Describe this memory..."></textarea>
             </div>
             <button onclick="addPhoto()">➕ Add Photo</button>
-
             <div id="photosList" style="margin-top: 20px;"></div>
-
-            <button onclick="generateLink()" id="generateBtn" style="background: #06d6a0; margin-top: 20px;">🎁 Generate Surprise Link</button>
+            <button onclick="generateLink()" style="background: #06d6a0;">🎁 Generate Link</button>
         </div>
 
         <!-- Share Section -->
-        <div id="shareSection" class="card hidden">
-            <h2>🎉 Your Surprise is Ready!</h2>
-            <p>Share this link with the birthday person:</p>
-            
-            <div class="form-group">
-                <input type="text" id="shareLink" readonly style="background: #f8f9fa;">
-                <button onclick="copyLink()" style="background: #ff6b6b;">📋 Copy Link</button>
-            </div>
-
-            <div class="qr-code">
-                <div id="qrCode"></div>
-                <p>Scan with phone camera</p>
-            </div>
-
-            <button onclick="testLink()" style="background: #667eea;">🔗 Test Link</button>
+        <div id="shareSection" class="hidden">
+            <h1>🎉 Ready to Share!</h1>
+            <p>Copy this link and send to the birthday person:</p>
+            <input type="text" id="shareLink" readonly style="width: 100%; padding: 10px; margin: 10px 0;">
+            <button onclick="copyLink()">📋 Copy Link</button>
+            <button onclick="testLink()" style="background: #ff6b6b;">🔗 Test Link</button>
             <button onclick="location.reload()" style="background: #888;">🔄 Create New</button>
         </div>
     </div>
@@ -117,10 +123,10 @@
         let memories = [];
         let birthdayData = {};
 
-        function startUpload() {
-            const name = document.getElementById('birthdayName').value.trim();
-            const yourName = document.getElementById('yourName').value.trim();
-            const message = document.getElementById('birthdayMessage').value.trim();
+        function showUploadSection() {
+            const name = document.getElementById('birthdayName').value;
+            const yourName = document.getElementById('yourName').value;
+            const message = document.getElementById('birthdayMessage').value;
 
             if (!name || !yourName || !message) {
                 alert('Please fill in all fields!');
@@ -128,12 +134,13 @@
             }
 
             birthdayData = { birthdayPerson: name, yourName: yourName, mainMessage: message };
-            showSection('uploadSection');
+            document.getElementById('setupSection').classList.add('hidden');
+            document.getElementById('uploadSection').classList.remove('hidden');
         }
 
         function addPhoto() {
             const fileInput = document.getElementById('photoInput');
-            const desc = document.getElementById('photoDesc').value.trim();
+            const desc = document.getElementById('photoDesc').value;
 
             if (!fileInput.files[0] || !desc) {
                 alert('Please select a photo and add description!');
@@ -146,7 +153,6 @@
                     image: e.target.result,
                     description: desc
                 });
-
                 updatePhotosList();
                 fileInput.value = '';
                 document.getElementById('photoDesc').value = '';
@@ -157,21 +163,14 @@
         function updatePhotosList() {
             const list = document.getElementById('photosList');
             list.innerHTML = '<h3>Added Photos (' + memories.length + ')</h3>';
-            
             memories.forEach((memory, index) => {
                 list.innerHTML += `
-                    <div class="memory-item">
-                        <div class="memory-preview">
-                            <img src="${memory.image}" alt="Photo ${index + 1}">
-                            <div>
-                                <strong>Photo ${index + 1}:</strong> ${memory.description}
-                            </div>
-                        </div>
+                    <div style="background: #f8f9fa; padding: 10px; margin: 5px 0; border-radius: 5px;">
+                        <img src="${memory.image}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;">
+                        <span>Photo ${index + 1}: ${memory.description}</span>
                     </div>
                 `;
             });
-
-            document.getElementById('generateBtn').disabled = memories.length === 0;
         }
 
         function generateLink() {
@@ -180,47 +179,34 @@
                 return;
             }
 
-            // Create a unique ID
-            const surpriseId = 'bday_' + Date.now();
-            
-            // Save to localStorage (for testing on same device)
+            const surpriseId = 'birthday_' + Date.now();
             const surpriseData = {
                 ...birthdayData,
                 memories: memories,
                 id: surpriseId
             };
+
+            // Save to localStorage
             localStorage.setItem(surpriseId, JSON.stringify(surpriseData));
 
-            // Generate the link
-            const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+            // Generate link
+            const baseUrl = window.location.origin + window.location.pathname.split('/').slice(0, -1).join('/');
             const shareLink = baseUrl + '/viewer.html?id=' + surpriseId;
-            
-            document.getElementById('shareLink').value = shareLink;
-            generateQRCode(shareLink);
-            showSection('shareSection');
-        }
 
-        function generateQRCode(link) {
-            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
-            document.getElementById('qrCode').innerHTML = `<img src="${qrUrl}" alt="QR Code">`;
+            document.getElementById('shareLink').value = shareLink;
+            document.getElementById('uploadSection').classList.add('hidden');
+            document.getElementById('shareSection').classList.remove('hidden');
         }
 
         function copyLink() {
             const linkInput = document.getElementById('shareLink');
             linkInput.select();
-            navigator.clipboard.writeText(linkInput.value);
+            document.execCommand('copy');
             alert('Link copied to clipboard!');
         }
 
         function testLink() {
             window.open(document.getElementById('shareLink').value, '_blank');
-        }
-
-        function showSection(sectionName) {
-            document.getElementById('setupSection').classList.add('hidden');
-            document.getElementById('uploadSection').classList.add('hidden');
-            document.getElementById('shareSection').classList.add('hidden');
-            document.getElementById(sectionName).classList.remove('hidden');
         }
     </script>
 </body>
