@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Surprise!</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div id="loading" class="loading">
+            <h2>Loading your birthday surprise... 🎁</h2>
+        </div>
+
+        <div id="content" style="display: none;">
+            <header class="header">
+                <h1>🎂 Happy Birthday, <span id="viewerBirthdayName">Friend</span>! 🎂</h1>
+                <p class="subtitle">A special message from <span id="senderName">Someone</span></p>
+            </header>
+
+            <div class="main-message">
+                <div class="message-card">
+                    <p id="birthdayWish"></p>
+                </div>
+            </div>
+
+            <div class="memories-section">
+                <h2>📸 Your Memory Collection</h2>
+                <div id="memoriesContainer" class="memories-container">
+                    <!-- Memories will be loaded here -->
+                </div>
+                
+                <div class="navigation-controls">
+                    <button id="prevBtn" class="btn nav-btn">← Previous</button>
+                    <span id="photoCounter">Photo 1 of 1</span>
+                    <button id="nextBtn" class="btn nav-btn">Next →</button>
+                </div>
+            </div>
+
+            <footer class="footer">
+                <p>Made with love for your special day! 💝</p>
+            </footer>
+        </div>
+
+        <div id="error" class="error-section" style="display: none;">
+            <div class="error-card">
+                <h2>Oops! 🎁</h2>
+                <p>We couldn't find your birthday surprise.</p>
+                <p>The link might be expired or incorrect.</p>
+                <a href="index.html" class="btn btn-primary">Create Your Own Surprise</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="viewer.js"></script>
+</body>
+</html>
