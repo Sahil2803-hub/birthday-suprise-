@@ -3,316 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Birthday Surprise!</title>
+    <title>Create Birthday Surprise</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            min-height: 100vh; 
+            padding: 20px;
             color: #333;
-            line-height: 1.6;
         }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 40px;
-            color: white;
-        }
-
-        .header h1 {
-            font-size: 2.8em;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .subtitle {
-            font-size: 1.2em;
-            opacity: 0.9;
-        }
-
-        .main-message {
-            margin: 40px 0;
-        }
-
-        .message-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-            font-size: 1.3em;
-            line-height: 1.8;
-            color: #555;
-            font-style: italic;
-        }
-
-        .memories-section {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-
-        .memories-section h2 {
-            text-align: center;
-            color: #667eea;
-            margin-bottom: 30px;
-        }
-
-        .memory-display {
-            text-align: center;
-        }
-
-        .memory-image-container {
-            margin: 20px 0;
-        }
-
-        .memory-image {
-            max-width: 100%;
-            max-height: 400px;
-            border-radius: 15px;
+        .container { max-width: 600px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .card { 
+            background: white; 
+            padding: 30px; 
+            border-radius: 15px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
         }
-
-        .memory-description {
-            margin: 25px 0;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 12px;
-            font-size: 1.1em;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .navigation-controls {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 30px;
-        }
-
-        .nav-btn {
-            padding: 12px 25px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 25px;
-            cursor: pointer;
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        input, textarea, button { 
+            width: 100%; 
+            padding: 12px; 
+            border: 2px solid #ddd; 
+            border-radius: 8px; 
             font-size: 16px;
         }
-
-        .nav-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        button { 
+            background: #667eea; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold;
+            margin-top: 10px;
         }
-
-        #photoCounter {
-            font-weight: 600;
-            color: #667eea;
-            font-size: 1.1em;
+        button:hover { background: #5a6fd8; }
+        .memory-item { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
         }
-
-        .loading, .error-section {
-            text-align: center;
-            color: white;
-            padding: 100px 20px;
-        }
-
-        .error-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .footer {
-            text-align: center;
-            color: white;
-            margin-top: 40px;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .navigation-controls {
-                flex-direction: column;
-                gap: 15px;
-            }
-        }
+        .memory-preview { display: flex; align-items: center; gap: 15px; }
+        .memory-preview img { width: 60px; height: 60px; object-fit: cover; border-radius: 6px; }
+        .qr-code { text-align: center; margin: 20px 0; }
+        .qr-code img { max-width: 200px; border: 1px solid #ddd; padding: 10px; background: white; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="loading" class="loading">
-            <h2>Loading your birthday surprise... 🎁</h2>
+        <!-- Setup Section -->
+        <div id="setupSection" class="card">
+            <h2>🎂 Create Birthday Surprise</h2>
+            <div class="form-group">
+                <label>Birthday Person's Name:</label>
+                <input type="text" id="birthdayName" placeholder="Enter their name">
+            </div>
+            <div class="form-group">
+                <label>Your Name:</label>
+                <input type="text" id="yourName" placeholder="Enter your name">
+            </div>
+            <div class="form-group">
+                <label>Birthday Message:</label>
+                <textarea id="birthdayMessage" placeholder="Write your birthday wish..."></textarea>
+            </div>
+            <button onclick="startUpload()">Start Adding Photos →</button>
         </div>
 
-        <div id="content" style="display: none;">
-            <header class="header">
-                <h1>🎂 Happy Birthday, <span id="viewerBirthdayName">Friend</span>! 🎂</h1>
-                <p class="subtitle">A special message from <span id="senderName">Someone</span></p>
-            </header>
-
-            <div class="main-message">
-                <div class="message-card">
-                    <p id="birthdayWish"></p>
-                </div>
+        <!-- Upload Section -->
+        <div id="uploadSection" class="card hidden">
+            <h2>📸 Add Photos & Memories</h2>
+            <div class="form-group">
+                <label>Choose Photo:</label>
+                <input type="file" id="photoInput" accept="image/*">
             </div>
-
-            <div class="memories-section">
-                <h2>📸 Your Memory Collection</h2>
-                <div id="memoriesContainer" class="memories-container">
-                    <!-- Memories will be loaded here -->
-                </div>
-                
-                <div class="navigation-controls">
-                    <button id="prevBtn" class="nav-btn">← Previous</button>
-                    <span id="photoCounter">Photo 1 of 1</span>
-                    <button id="nextBtn" class="nav-btn">Next →</button>
-                </div>
+            <div class="form-group">
+                <label>Photo Description:</label>
+                <textarea id="photoDesc" placeholder="Describe this memory..."></textarea>
             </div>
+            <button onclick="addPhoto()">➕ Add Photo</button>
 
-            <footer class="footer">
-                <p>Made with love for your special day! 💝</p>
-            </footer>
+            <div id="photosList" style="margin-top: 20px;"></div>
+
+            <button onclick="generateLink()" id="generateBtn" style="background: #06d6a0; margin-top: 20px;">🎁 Generate Surprise Link</button>
         </div>
 
-        <div id="error" class="error-section" style="display: none;">
-            <div class="error-card">
-                <h2>Oops! 🎁</h2>
-                <p>We couldn't find your birthday surprise.</p>
-                <p>The link might be expired or incorrect.</p>
-                <a href="index.html" class="nav-btn">Create Your Own Surprise</a>
+        <!-- Share Section -->
+        <div id="shareSection" class="card hidden">
+            <h2>🎉 Your Surprise is Ready!</h2>
+            <p>Share this link with the birthday person:</p>
+            
+            <div class="form-group">
+                <input type="text" id="shareLink" readonly style="background: #f8f9fa;">
+                <button onclick="copyLink()" style="background: #ff6b6b;">📋 Copy Link</button>
             </div>
+
+            <div class="qr-code">
+                <div id="qrCode"></div>
+                <p>Scan with phone camera</p>
+            </div>
+
+            <button onclick="testLink()" style="background: #667eea;">🔗 Test Link</button>
+            <button onclick="location.reload()" style="background: #888;">🔄 Create New</button>
         </div>
     </div>
 
     <script>
-        // viewer.js - Simple Viewer
-        let currentPhotoIndex = 0;
-        let surpriseData = null;
+        let memories = [];
+        let birthdayData = {};
 
-        // Get surprise ID from URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const surpriseId = urlParams.get('id');
+        function startUpload() {
+            const name = document.getElementById('birthdayName').value.trim();
+            const yourName = document.getElementById('yourName').value.trim();
+            const message = document.getElementById('birthdayMessage').value.trim();
 
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Viewer loaded, surprise ID:', surpriseId);
-            
-            if (!surpriseId) {
-                showError();
+            if (!name || !yourName || !message) {
+                alert('Please fill in all fields!');
                 return;
             }
 
-            loadSurprise();
-        });
-
-        function loadSurprise() {
-            console.log('Loading surprise data...');
-            const data = localStorage.getItem(surpriseId);
-            
-            if (!data) {
-                console.log('No data found for ID:', surpriseId);
-                showError();
-                return;
-            }
-
-            surpriseData = JSON.parse(data);
-            console.log('Surprise data loaded:', surpriseData);
-            displaySurprise();
+            birthdayData = { birthdayPerson: name, yourName: yourName, mainMessage: message };
+            showSection('uploadSection');
         }
 
-        function displaySurprise() {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('content').style.display = 'block';
+        function addPhoto() {
+            const fileInput = document.getElementById('photoInput');
+            const desc = document.getElementById('photoDesc').value.trim();
+
+            if (!fileInput.files[0] || !desc) {
+                alert('Please select a photo and add description!');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                memories.push({
+                    image: e.target.result,
+                    description: desc
+                });
+
+                updatePhotosList();
+                fileInput.value = '';
+                document.getElementById('photoDesc').value = '';
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+
+        function updatePhotosList() {
+            const list = document.getElementById('photosList');
+            list.innerHTML = '<h3>Added Photos (' + memories.length + ')</h3>';
             
-            // Set basic info
-            document.getElementById('viewerBirthdayName').textContent = surpriseData.birthdayPerson;
-            document.getElementById('senderName').textContent = surpriseData.yourName;
-            document.getElementById('birthdayWish').textContent = surpriseData.mainMessage;
-            
-            // Display first photo
-            displayCurrentPhoto();
-            
-            // Setup navigation
-            document.getElementById('prevBtn').addEventListener('click', showPreviousPhoto);
-            document.getElementById('nextBtn').addEventListener('click', showNextPhoto);
-            
-            // Add keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'ArrowLeft') {
-                    showPreviousPhoto();
-                } else if (e.key === 'ArrowRight') {
-                    showNextPhoto();
-                }
+            memories.forEach((memory, index) => {
+                list.innerHTML += `
+                    <div class="memory-item">
+                        <div class="memory-preview">
+                            <img src="${memory.image}" alt="Photo ${index + 1}">
+                            <div>
+                                <strong>Photo ${index + 1}:</strong> ${memory.description}
+                            </div>
+                        </div>
+                    </div>
+                `;
             });
+
+            document.getElementById('generateBtn').disabled = memories.length === 0;
         }
 
-        function displayCurrentPhoto() {
-            const container = document.getElementById('memoriesContainer');
-            const memory = surpriseData.memories[currentPhotoIndex];
-            
-            container.innerHTML = `
-                <div class="memory-display">
-                    <div class="memory-image-container">
-                        <img src="${memory.image}" alt="Memory photo" class="memory-image">
-                    </div>
-                    <div class="memory-description">
-                        <p>${memory.description}</p>
-                    </div>
-                </div>
-            `;
-            
-            updateNavigation();
-        }
-
-        function showNextPhoto() {
-            if (currentPhotoIndex < surpriseData.memories.length - 1) {
-                currentPhotoIndex++;
-                displayCurrentPhoto();
+        function generateLink() {
+            if (memories.length === 0) {
+                alert('Please add at least one photo!');
+                return;
             }
-        }
 
-        function showPreviousPhoto() {
-            if (currentPhotoIndex > 0) {
-                currentPhotoIndex--;
-                displayCurrentPhoto();
-            }
-        }
-
-        function updateNavigation() {
-            document.getElementById('photoCounter').textContent = 
-                `Photo ${currentPhotoIndex + 1} of ${surpriseData.memories.length}`;
+            // Create a unique ID
+            const surpriseId = 'bday_' + Date.now();
             
-            document.getElementById('prevBtn').disabled = currentPhotoIndex === 0;
-            document.getElementById('nextBtn').disabled = currentPhotoIndex === surpriseData.memories.length - 1;
+            // Save to localStorage (for testing on same device)
+            const surpriseData = {
+                ...birthdayData,
+                memories: memories,
+                id: surpriseId
+            };
+            localStorage.setItem(surpriseId, JSON.stringify(surpriseData));
+
+            // Generate the link
+            const baseUrl = window.location.href.split('/').slice(0, -1).join('/');
+            const shareLink = baseUrl + '/viewer.html?id=' + surpriseId;
+            
+            document.getElementById('shareLink').value = shareLink;
+            generateQRCode(shareLink);
+            showSection('shareSection');
         }
 
-        function showError() {
-            document.getElementById('loading').style.display = 'none';
-            document.getElementById('error').style.display = 'block';
+        function generateQRCode(link) {
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(link)}`;
+            document.getElementById('qrCode').innerHTML = `<img src="${qrUrl}" alt="QR Code">`;
+        }
+
+        function copyLink() {
+            const linkInput = document.getElementById('shareLink');
+            linkInput.select();
+            navigator.clipboard.writeText(linkInput.value);
+            alert('Link copied to clipboard!');
+        }
+
+        function testLink() {
+            window.open(document.getElementById('shareLink').value, '_blank');
+        }
+
+        function showSection(sectionName) {
+            document.getElementById('setupSection').classList.add('hidden');
+            document.getElementById('uploadSection').classList.add('hidden');
+            document.getElementById('shareSection').classList.add('hidden');
+            document.getElementById(sectionName).classList.remove('hidden');
         }
     </script>
 </body>
