@@ -5,102 +5,95 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Surprise!</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: Arial, sans-serif; 
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh; 
-            padding: 20px;
-            color: #333;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .container { max-width: 600px; margin: 0 auto; }
-        .header { text-align: center; color: white; margin-bottom: 30px; }
-        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
-        .card { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 15px; 
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            margin-bottom: 20px;
             text-align: center;
         }
-        .memory-image { 
-            max-width: 100%; 
-            max-height: 400px; 
-            border-radius: 10px; 
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
         }
-        .memory-desc { 
-            background: #f8f9fa; 
-            padding: 20px; 
-            border-radius: 10px; 
+        .memory-image {
+            max-width: 100%;
+            max-height: 400px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .memory-desc {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
             margin: 20px 0;
             font-size: 1.1em;
         }
-        .nav-buttons { 
-            display: flex; 
-            justify-content: space-between; 
-            margin: 20px 0;
-            gap: 10px;
-        }
-        button { 
-            padding: 12px 25px; 
-            border: none; 
-            border-radius: 8px; 
-            background: #667eea; 
-            color: white; 
+        button {
+            padding: 10px 20px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 16px;
+            margin: 5px;
         }
-        button:disabled { opacity: 0.5; cursor: not-allowed; }
-        .counter { font-weight: bold; color: #667eea; font-size: 1.1em; }
-        .error { 
-            background: #ff6b6b; 
-            color: white; 
-            padding: 20px; 
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .hidden {
+            display: none;
+        }
+        .error {
+            background: #ff6b6b;
+            color: white;
+            padding: 20px;
             border-radius: 10px;
-            text-align: center;
         }
-        .hidden { display: none; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="loading" class="card">
+        <div id="loading">
             <h2>Loading your birthday surprise... 🎁</h2>
         </div>
 
         <div id="content" class="hidden">
-            <div class="header">
-                <h1>🎂 Happy Birthday, <span id="birthdayPerson">Friend</span>! 🎂</h1>
-                <p>From: <span id="senderName">Someone Special</span></p>
+            <h1>🎂 Happy Birthday, <span id="birthdayPerson">Friend</span>! 🎂</h1>
+            <p>From: <span id="senderName">Someone Special</span></p>
+            
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                <p id="birthdayMessage" style="font-size: 1.2em; font-style: italic;"></p>
             </div>
 
-            <div class="card">
-                <p id="birthdayMessage" style="font-size: 1.2em; line-height: 1.6;"></p>
-            </div>
-
-            <div class="card">
-                <h2>📸 Memory Lane</h2>
-                <div id="memoryDisplay">
-                    <!-- Memory content will go here -->
-                </div>
-                
-                <div class="nav-buttons">
-                    <button id="prevBtn" onclick="prevPhoto()">← Previous</button>
-                    <span id="photoCounter" class="counter">Photo 1 of 1</span>
-                    <button id="nextBtn" onclick="nextPhoto()">Next →</button>
-                </div>
+            <h2>📸 Your Memories</h2>
+            <div id="memoryDisplay"></div>
+            
+            <div style="margin: 20px 0;">
+                <button id="prevBtn" onclick="prevPhoto()">← Previous</button>
+                <span id="photoCounter" style="margin: 0 15px; font-weight: bold;">Photo 1 of 1</span>
+                <button id="nextBtn" onclick="nextPhoto()">Next →</button>
             </div>
         </div>
 
         <div id="error" class="error hidden">
-            <h2>🎁 Surprise Not Found</h2>
-            <p>This birthday surprise link is invalid or has expired.</p>
-            <button onclick="window.location.href = 'index.html'" style="margin-top: 15px;">
-                Create Your Own Surprise
-            </button>
+            <h2>Surprise Not Found</h2>
+            <p>This link is invalid or has expired.</p>
+            <button onclick="window.location.href = 'index.html'">Create Your Own</button>
         </div>
     </div>
 
@@ -108,18 +101,12 @@
         let currentPhoto = 0;
         let surpriseData = null;
 
-        // Get the surprise ID from URL
+        // Get surprise ID from URL
         const urlParams = new URLSearchParams(window.location.search);
         const surpriseId = urlParams.get('id');
 
-        // Load the surprise when page opens
-        window.addEventListener('load', function() {
-            if (!surpriseId) {
-                showError();
-                return;
-            }
-
-            // Try to load from localStorage
+        // Load the surprise
+        if (surpriseId) {
             const data = localStorage.getItem(surpriseId);
             if (data) {
                 surpriseData = JSON.parse(data);
@@ -127,31 +114,28 @@
             } else {
                 showError();
             }
-        });
+        } else {
+            showError();
+        }
 
         function showSurprise() {
             document.getElementById('loading').classList.add('hidden');
             document.getElementById('content').classList.remove('hidden');
 
-            // Set basic info
             document.getElementById('birthdayPerson').textContent = surpriseData.birthdayPerson;
             document.getElementById('senderName').textContent = surpriseData.yourName;
             document.getElementById('birthdayMessage').textContent = surpriseData.mainMessage;
 
-            // Show first photo
             showCurrentPhoto();
         }
 
         function showCurrentPhoto() {
             const memory = surpriseData.memories[currentPhoto];
-            const memoryDisplay = document.getElementById('memoryDisplay');
-            
-            memoryDisplay.innerHTML = `
-                <img src="${memory.image}" alt="Memory photo" class="memory-image">
+            document.getElementById('memoryDisplay').innerHTML = `
+                <img src="${memory.image}" class="memory-image">
                 <div class="memory-desc">${memory.description}</div>
             `;
 
-            // Update counter and buttons
             document.getElementById('photoCounter').textContent = 
                 `Photo ${currentPhoto + 1} of ${surpriseData.memories.length}`;
             
